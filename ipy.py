@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# ipy - Interactive Python
+# ipy - Interactive Python Console
 # Copyright (C) 2015 Ingo Ruhnke <grumbel@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -24,13 +24,13 @@ import argparse
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Interactive Python Shell')
+    parser = argparse.ArgumentParser(description='Interactive Python Console')
     parser.add_argument('FILE', action='store', type=str, nargs='*',
-                        help='Video file to thumbnail')
+                        help='Load FILE into the interactive interpreter')
     parser.add_argument('-v', '--verbose', action='store_true', default=False,
                         help='Be more verbose')
     parser.add_argument('--main', action='store_true', default=False,
-                        help='Execute the __name__ == "__main__" block')
+                        help='Execute the \'__name__ == "__main__"\' block')
     return parser.parse_args()
 
 
@@ -62,6 +62,10 @@ def main():
         print()
 
     code.interact(banner="", local=global_vars)
+
+
+def main_entrypoint():
+    main()
 
 
 if __name__ == "__main__":
