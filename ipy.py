@@ -21,6 +21,7 @@ import code
 import readline
 import rlcompleter
 import argparse
+import os
 
 
 def parse_args():
@@ -55,6 +56,10 @@ def main():
     readline.set_completer(rlcompleter.Completer(global_vars).complete)
     readline.parse_and_bind("tab: complete")
 
+    history_file = os.path.expanduser("~/.ipy_history")
+    if os.path.exists(history_file):
+        readline.read_history_file(history_file)
+
     if args.verbose:
         for k, v in global_vars.items():
             if k != "__builtins__":
@@ -62,6 +67,8 @@ def main():
         print()
 
     code.interact(banner="", local=global_vars)
+
+    readline.write_history_file(history_file)
 
 
 def main_entrypoint():
