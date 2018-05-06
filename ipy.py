@@ -32,6 +32,8 @@ def parse_args():
                         help='Be more verbose')
     parser.add_argument('-c', '--command', metavar="COMMAND", type=str, action='append',
                         help='Execute COMMAND')
+    parser.add_argument('-q', '--quit', action='store_true', default=False,
+                        help='Exit after executing all files and commands')
     parser.add_argument('--main', action='store_true', default=False,
                         help='Execute the \'__name__ == "__main__"\' block')
     return parser.parse_args()
@@ -69,19 +71,20 @@ def main():
     readline.set_completer(rlcompleter.Completer(global_vars).complete)
     readline.parse_and_bind("tab: complete")
 
-    history_file = os.path.expanduser("~/.ipy_history")
-    if os.path.exists(history_file):
-        readline.read_history_file(history_file)
-
     if args.verbose:
         for k, v in global_vars.items():
             if k != "__builtins__":
                 print("{} = {}".format(k, v))
         print()
 
-    code.interact(banner="", local=global_vars)
+    if not args.quit:
+        history_file = os.path.expanduser("~/.ipy_history")
+        if os.path.exists(history_file):
+            readline.read_history_file(history_file)
 
-    readline.write_history_file(history_file)
+        code.interact(banner="", local=global_vars)
+
+        readline.write_history_file(history_file)
 
 
 def main_entrypoint():
