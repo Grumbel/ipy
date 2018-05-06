@@ -30,6 +30,8 @@ def parse_args():
                         help='Load FILE into the interactive interpreter')
     parser.add_argument('-v', '--verbose', action='store_true', default=False,
                         help='Be more verbose')
+    parser.add_argument('-c', '--command', metavar="COMMAND", type=str, action='append',
+                        help='Execute COMMAND')
     parser.add_argument('--main', action='store_true', default=False,
                         help='Execute the \'__name__ == "__main__"\' block')
     return parser.parse_args()
@@ -52,6 +54,17 @@ def main():
             exec(func, global_vars)
     if args.verbose and args.FILE:
         print()
+
+    if args.command is not None:
+        for command in args.command:
+            if args.verbose:
+                print("executing: '{}'".format(command))
+            func = compile(command, "command", 'exec')
+            exec(func, global_vars)
+
+    if args.verbose and args.command:
+        print()
+
 
     readline.set_completer(rlcompleter.Completer(global_vars).complete)
     readline.parse_and_bind("tab: complete")
