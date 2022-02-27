@@ -1,7 +1,5 @@
-#!/usr/bin/env python
-
 # ipy - Interactive Python Console
-# Copyright (C) 2015 Ingo Ruhnke <grumbel@gmail.com>
+# Copyright (C) 2022 Ingo Ruhnke <grumbel@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,22 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-from setuptools import setup
-
-
-setup(name='Interactive Python',
-      version='0.1',
-      description='Interactive Python Console',
-      author='Ingo Ruhnke',
-      author_email='grumbel@gmail.com',
-      url='https://github.com/Grumbel/ipy',
-      packages=['ipy'],
-      entry_points={
-          'console_scripts': [
-              'ipy = ipy:main_entrypoint',
-          ]
-      })
-
+from .ipy import main_entrypoint
 
 # EOF #
